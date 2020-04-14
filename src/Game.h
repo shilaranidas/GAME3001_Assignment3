@@ -23,6 +23,7 @@
 #include "EndScene.h"
 
 #include "Config.h"
+#define CLOSE_RADIUS 100
 
 class Game
 {
@@ -63,7 +64,7 @@ public:
 	void changeSceneState(SceneState new_state);
 	void quit();
 
-	
+	bool m_debug;
 private:
 	Game();
 	~Game();

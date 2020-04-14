@@ -1,6 +1,8 @@
 #include "PlaneSprite.h"
 #include "Game.h"
+#include "Util.h"
 #include <utility>
+
 
 PlaneSprite::PlaneSprite()
 {
@@ -35,6 +37,10 @@ void PlaneSprite::draw()
 		"spritesheet", m_pAnimations["plane"],
 		getPosition().x, getPosition().y, m_pAnimations["plane"].current_frame, 0.5f,
 		TheGame::Instance()->getRenderer(), 0, 255, true);
+	if (TheGame::Instance()->m_debug)
+	{
+		Util::DrawCircle(this->getPosition(), CLOSE_RADIUS, glm::vec4(1.0f, 0.0f, 0.0f, 0.0f));
+	}
 }
 
 void PlaneSprite::update()
@@ -44,6 +50,8 @@ void PlaneSprite::update()
 void PlaneSprite::clean()
 {
 }
+
+
 
 void PlaneSprite::setAnimation(const Animation& animation)
 {

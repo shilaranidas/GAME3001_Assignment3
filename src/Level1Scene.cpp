@@ -16,6 +16,8 @@ Level1Scene::~Level1Scene()
 void Level1Scene::draw()
 {
 	drawDisplayList();
+	m_pWall->draw();
+	m_pWall1->draw();
 	ExplosionManager::Instance()->draw();
 }
 
@@ -77,6 +79,9 @@ void Level1Scene::handleEvents()
 			{
 			case SDLK_ESCAPE:
 				TheGame::Instance()->quit();
+				break;
+			case SDLK_BACKQUOTE:
+				TheGame::Instance()->m_debug = !TheGame::Instance()->m_debug;
 				break;
 			case SDLK_1:
 				//TheGame::Instance()->changeSceneState(SceneState::PLAY_SCENE);
@@ -292,6 +297,7 @@ void Level1Scene::start()
 	m_buildGrid();
 	m_pWall = new Wall();
 	m_pWall1 = new Wall();
+	
 	m_spawnWall();
 	m_mapTiles();
 	m_pPlaneSprite = new PlaneSprite();
@@ -301,4 +307,6 @@ void Level1Scene::start()
 	m_pPlayer = new Player();
 	addChild(m_pPlayer);
 	m_spawnPlayer();
+
+	
 }

@@ -11,7 +11,7 @@ Game* Game::s_pInstance = nullptr;
 // Game functions - DO NOT REMOVE ***********************************************
 
 Game::Game() :
-	m_pWindow(nullptr), m_pRenderer(nullptr), m_currentFrame(0), m_bRunning(true), m_frames(0), m_currentScene(nullptr), m_currentSceneState(NO_SCENE)
+	m_pWindow(nullptr), m_pRenderer(nullptr), m_currentFrame(0), m_bRunning(true), m_frames(0), m_currentScene(nullptr), m_currentSceneState(NO_SCENE), m_debug(false)
 {
 	srand(unsigned(time(nullptr)));  // random seed
 }
@@ -212,6 +212,9 @@ void Game::handleEvents()
 			{
 				case SDLK_ESCAPE:
 					m_bRunning = false;
+					break;
+				case SDLK_BACKQUOTE:
+					m_debug = !m_debug;
 					break;
 			}
 			break;
