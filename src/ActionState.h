@@ -1,0 +1,17 @@
+#pragma once
+#ifndef __ACTION_STATE__
+#define __ACTION_STATE__
+enum ActionState
+{
+	NO_ACTION_STATE,
+	MOVE_PATROL,
+	MOVE_SEEK,
+	MOVE_BEHIND_COVER,
+	MOVE_FLEE,
+	MOVE_TO_LOS,
+	MOVE_TO_RADIUS,
+	MELEE_ATTACK,
+	RANGED_ATTACK,
+	NUM_OF_ACTION_STATES
+};
+#endif /* defined (__ACTION_STATE__)*/
