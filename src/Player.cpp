@@ -78,7 +78,30 @@ void Player::setAnimation(const Animation& animation)
 {
 	m_pAnimations[animation.name] = animation;
 }
+void Player::moveUp()
+{
+	const glm::vec2 newPosition = getPosition() + glm::vec2(0, -40);
 
+	setPosition(newPosition);
+}
+void Player::moveDown()
+{
+	const glm::vec2 newPosition = getPosition() + glm::vec2(0, 40);
+
+	setPosition(newPosition);
+}
+void Player::moveLeft()
+{
+	const glm::vec2 newPosition = getPosition() + glm::vec2(-40, 0);
+
+	setPosition(newPosition);
+}
+void Player::moveRight()
+{
+	const glm::vec2 newPosition = getPosition() + glm::vec2(40, 0);
+
+	setPosition(newPosition);
+}
 void Player::m_buildAnimations()
 {
 	Animation idleAnimation = Animation();

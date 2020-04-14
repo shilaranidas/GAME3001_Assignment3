@@ -18,7 +18,10 @@ public:
 	virtual void draw() override;
 	virtual void update() override;
 	virtual void clean() override;
-
+	void moveUp();
+	void moveDown();
+	void moveLeft();
+	void moveRight();
 	// setters
 	void setAnimationState(PlayerAnimationState new_state);
 	void setAnimation(const Animation& animation);

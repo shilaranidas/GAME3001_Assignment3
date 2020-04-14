@@ -30,7 +30,19 @@ void Level1Scene::clean()
 
 	removeAllChildren();
 }
+void Level1Scene::m_mapTiles()
+{
+	for (auto tile : m_pGrid)
+	{
+		const auto x = tile->getGridPosition().x;
+		const auto y = tile->getGridPosition().y;
 
+		if (y != 0) { tile->setUp(m_pGrid[x + ((y - 1) * Config::COL_NUM)]); }
+		if (x != Config::COL_NUM - 1) { tile->setRight(m_pGrid[(x + 1) + (y * Config::COL_NUM)]); }
+		if (y != Config::ROW_NUM - 1) { tile->setDown(m_pGrid[x + ((y + 1) * Config::COL_NUM)]); }
+		if (x != 0) { tile->setLeft(m_pGrid[(x - 1) + (y * Config::COL_NUM)]); }
+	}
+}
 void Level1Scene::handleEvents()
 {
 	auto wheel = 0;
@@ -78,25 +90,45 @@ void Level1Scene::handleEvents()
 				if(keyPressed == SDLK_w)
 				{
 					std::cout << "move forward" << std::endl;
-
+					if (m_pPlayer->getTile()->getUp()->getTileState() != IMPASSABLE && m_pPlayer->getTile()->getUp()->getTileState() != OBSTACLE)
+					{
+						m_pPlayer->moveUp();
+						m_pPlayer->setTile(m_pPlayer->getTile()->getUp());
+					}
 				}
 
 				if (keyPressed == SDLK_a)
 				{
+					if (m_pPlayer->getTile()->getLeft()->getTileState() != IMPASSABLE && m_pPlayer->getTile()->getUp()->getTileState() != OBSTACLE)
+					{
+						m_pPlayer->setAnimationState(PLAYER_RUN_LEFT);
+						m_pPlayer->moveLeft();
+						m_pPlayer->setTile(m_pPlayer->getTile()->getLeft());
+					}
 					//std::cout << "move left" << std::endl;
-					m_pPlayer->setAnimationState(PLAYER_RUN_LEFT);
+					
 				}
 
 				if (keyPressed == SDLK_s)
 				{
 					std::cout << "move back" << std::endl;
-				
+					if (m_pPlayer->getTile()->getDown()->getTileState() != IMPASSABLE && m_pPlayer->getTile()->getUp()->getTileState() != OBSTACLE)
+					{
+						m_pPlayer->moveDown();
+						m_pPlayer->setTile(m_pPlayer->getTile()->getDown());
+					}
 				}
 
 				if (keyPressed == SDLK_d)
 				{
+					if (m_pPlayer->getTile()->getRight()->getTileState() != IMPASSABLE && m_pPlayer->getTile()->getUp()->getTileState() != OBSTACLE)
+					{
+						m_pPlayer->setAnimationState(PLAYER_RUN_RIGHT);
+						m_pPlayer->moveRight();
+						m_pPlayer->setTile(m_pPlayer->getTile()->getRight());
+					}
 					//std::cout << "move right" << std::endl;
-					m_pPlayer->setAnimationState(PLAYER_RUN_RIGHT);
+					
 				}
 			}
 			
@@ -254,11 +286,14 @@ void Level1Scene::m_spawnObjectAt(PathFindingDisplayObject* object, int tileInde
 
 void Level1Scene::start()
 {
+	
+	// setup default heuristic options
+	m_heuristic = MANHATTAN;
 	m_buildGrid();
 	m_pWall = new Wall();
 	m_pWall1 = new Wall();
 	m_spawnWall();
-
+	m_mapTiles();
 	m_pPlaneSprite = new PlaneSprite();
 	addChild(m_pPlaneSprite);
 	m_spawnPlane();

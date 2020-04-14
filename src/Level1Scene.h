@@ -25,7 +25,7 @@ public:
 	virtual void start() override;
 	void m_buildGrid();
 	void m_resetGrid();
-
+	void m_mapTiles();
 private:
 	std::vector<Tile*> m_openList;
 	std::vector<Tile*> m_closedList;
