@@ -1,6 +1,7 @@
 #include "Level1Scene.h"
 #include "Game.h"
 #include "ExplosionManager.h"
+#include "BulletManager.h"
 #include "Wall.h"
 #include "Util.h"
 #include "IMGUI_SDL/imgui_sdl.h"
@@ -23,7 +24,7 @@ void Level1Scene::draw()
 		m_pPlayer->drawKnife();
 	
 	
-
+	BulletManager::Instance()->draw();
 	ExplosionManager::Instance()->draw();
 	// ImGui Rendering section - DO NOT MOVE OR DELETE
 	//if (m_displayUI)
@@ -47,7 +48,7 @@ void Level1Scene::update()
 	}
 	//else
 		//m_pPlayer->attack = false;
-
+	BulletManager::Instance()->update();
 	ExplosionManager::Instance()->update();
 }
 
@@ -107,12 +108,40 @@ void Level1Scene::handleEvents()
 			case SDLK_BACKQUOTE:
 				TheGame::Instance()->m_debug = !TheGame::Instance()->m_debug;
 				break;
+			
 			case SDLK_1:
 				//TheGame::Instance()->changeSceneState(SceneState::PLAY_SCENE);
 				break;
 			case SDLK_2:
 				//TheGame::Instance()->changeSceneState(SceneState::END_SCENE);
 				break;
+			}
+			//firing keys
+			{
+				if (keyPressed == SDLK_RIGHT) {
+					auto bullet = BulletManager::Instance()->getBullet();
+					bullet->dir = glm::vec2(10, 0);
+					bullet->setPosition(m_pPlayer->getPosition());					
+					TheSoundManager::Instance()->playSound("fire", 0);
+				}
+				if (keyPressed == SDLK_LEFT) {
+					auto bullet = BulletManager::Instance()->getBullet();
+					bullet->dir = glm::vec2(-10, 0);
+					bullet->setPosition(m_pPlayer->getPosition());
+					TheSoundManager::Instance()->playSound("fire", 0);
+				}
+				if (keyPressed == SDLK_UP) {
+					auto bullet = BulletManager::Instance()->getBullet();
+					bullet->dir = glm::vec2(0, -10);
+					bullet->setPosition(m_pPlayer->getPosition());
+					TheSoundManager::Instance()->playSound("fire", 0);
+				}
+				if (keyPressed == SDLK_DOWN) {
+					auto bullet = BulletManager::Instance()->getBullet();
+					bullet->dir = glm::vec2(0, 10);
+					bullet->setPosition(m_pPlayer->getPosition());
+					TheSoundManager::Instance()->playSound("fire", 0);
+				}
 			}
 			// movement keys
 			{
