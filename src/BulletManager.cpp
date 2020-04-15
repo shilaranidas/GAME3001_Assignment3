@@ -11,12 +11,18 @@ Bullet* BulletManager::getBullet()
 	return bullet;
 }
 
+void BulletManager::setGameObject(GameObject* go)
+{
+	m_pGameObj = go;
+}
+
 void BulletManager::update()
 {
 	for (auto bullet : m_pBulletPool)
 	{
 		if (bullet->isActive())
 		{
+			bullet->setGameObject(m_pGameObj);
 			bullet->update();
 		}
 	}

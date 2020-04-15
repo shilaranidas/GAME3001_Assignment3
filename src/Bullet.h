@@ -18,7 +18,7 @@ public:
 	virtual void clean() override;
 
 	void reset();
-
+	void setGameObject(GameObject* go);
 	// getters and setters
 	bool isActive();
 	void setActive();
@@ -26,7 +26,7 @@ public:
 
 private:
 	void m_buildAnimations();
-
+	GameObject* m_pGameObj;
 	SpriteSheet* m_pSpriteSheet;
 
 	int m_currentFrame;

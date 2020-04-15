@@ -22,15 +22,20 @@ public:
 	void setColour(SDL_Color new_colour) const;
 	void setSize(int new_size);
 	void setBorder(bool b);
+	void setBorderColor(SDL_Color c);
+	void setFillColor(SDL_Color c);
 	int value;
 private:
 	std::string m_fontPath;
 	std::string m_fontID;
 	SDL_Color m_fontColour;
+	SDL_Color m_borderColour;
+	SDL_Color m_fillColour;
 	std::string m_fontName;
 	std::string m_text;
 	bool m_isCentered = true;
 	bool m_isBordered = false;
+	bool m_isFilled = false;
 	int m_fontSize;
 	int m_fontStyle;
 

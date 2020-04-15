@@ -54,7 +54,7 @@ public:
 	void playAnimation(const std::string& sprite_sheet_name, Animation& animation, int x, int y, int& current_frame, float speed_factor, SDL_Renderer* renderer, double angle, int alpha, bool centered = false, SDL_RendererFlip flip = SDL_FLIP_NONE);
 	
 	void drawText(const std::string& id, int x, int y, SDL_Renderer* renderer, double angle, int alpha, bool centered = false, SDL_RendererFlip flip = SDL_FLIP_NONE);
-	void drawTextBorder(int health,const std::string& id, int x, int y, SDL_Renderer* renderer, double angle, int alpha, bool centered = false, SDL_RendererFlip flip = SDL_FLIP_NONE);
+	void drawTextBorder(int health,SDL_Color border,SDL_Color fill,const std::string& id, int x, int y, SDL_Renderer* renderer, double angle, int alpha, bool centered = false, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 	glm::vec2 getTextureSize(const std::string& id);
 

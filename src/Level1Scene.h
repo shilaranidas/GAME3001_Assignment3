@@ -30,6 +30,7 @@ public:
 private:
 	Label* m_pPlayerHealthLabel{};
 	Label* m_pEnemyHealthLabel{};
+	Label* m_pPlayerScoreLable{};
 	std::vector<Tile*> m_openList;
 	std::vector<Tile*> m_closedList;
 	glm::vec2 m_mousePosition;
@@ -41,11 +42,16 @@ private:
 	// Tile & Grid members
 	std::vector<Tile*> m_pGrid;
 	void m_spawnPlane();
+	void m_showEnemeyHealth();
 	void m_spawnPlayer();
+	void m_showPlayerHealth();
+	void m_showPlayerScore();
+	void m_initiateLabel();
 	void m_spawnWall();
 	void m_spawnObjectAt(PathFindingDisplayObject* object, int tileIndex);
 	int m_spawnObject(PathFindingDisplayObject* object);
 	void m_computeTileValues();
+	bool m_update = false;
 };
 
 #endif /* defined (__LEVEL1_SCENE__) */

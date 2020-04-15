@@ -19,7 +19,7 @@ public:
 	}
 
 	Bullet* getBullet();
-
+	void setGameObject(GameObject* go);
 	void update();
 	void draw();
 
@@ -28,7 +28,7 @@ private:
 	~BulletManager();
 
 	void m_buildBulletPool();
-
+	GameObject* m_pGameObj;
 	int m_bulletNumber;
 	std::list<Bullet*> m_pBulletPool;
 

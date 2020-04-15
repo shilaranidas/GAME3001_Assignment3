@@ -445,7 +445,7 @@ void TextureManager::drawText(const std::string& id, const int x, const int y, S
 	SDL_SetTextureAlphaMod(m_textureMap[id].get(), alpha);
 	SDL_RenderCopyEx(renderer, m_textureMap[id].get(), &srcRect, &destRect, angle, nullptr, flip);
 }
-void TextureManager::drawTextBorder(int health,const std::string& id, const int x, const int y, SDL_Renderer* renderer, const double angle, const int alpha, const bool centered, const SDL_RendererFlip flip)
+void TextureManager::drawTextBorder(int health, SDL_Color border, SDL_Color fill,const std::string& id, const int x, const int y, SDL_Renderer* renderer, const double angle, const int alpha, const bool centered, const SDL_RendererFlip flip)
 {
 	SDL_Rect srcRect;
 	SDL_Rect destRect;
@@ -471,11 +471,14 @@ void TextureManager::drawTextBorder(int health,const std::string& id, const int 
 		destRect.x = x;
 		destRect.y = y;
 	}
-	destRectFill = destRect;
-	destRectFill.w = destRectFill.w * (health/100.0f);
-	SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-	SDL_RenderFillRect(renderer, &destRectFill);
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	if (health > 0)
+	{
+		destRectFill = destRect;
+		destRectFill.w = destRectFill.w * (health / 100.0f);
+		SDL_SetRenderDrawColor(renderer, fill.r, fill.g, fill.b, fill.a);
+		SDL_RenderFillRect(renderer, &destRectFill);
+	}
+	SDL_SetRenderDrawColor(renderer, border.r, border.g, border.b, border.a);
 	SDL_RenderDrawRect(renderer, &destRect);
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	SDL_SetTextureAlphaMod(m_textureMap[id].get(), alpha);

@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "Game.h"
 
-Player::Player(): m_currentAnimationState(PLAYER_IDLE_RIGHT), attack(false), health(100)
+Player::Player(): m_currentAnimationState(PLAYER_IDLE_RIGHT), attack(false), m_health(100),m_score(0)
 {
 	TheTextureManager::Instance()->loadSpriteSheet(
 		"../Assets/sprites/atlas.txt",
@@ -11,6 +11,9 @@ Player::Player(): m_currentAnimationState(PLAYER_IDLE_RIGHT), attack(false), hea
 	m_pSpriteSheet = TheTextureManager::Instance()->getSpriteSheet("spritesheet");
 	TheSoundManager::Instance()->load("../Assets/audio/knifesharpener1.flac",
 		"yay", sound_type::SOUND_SFX);
+	m_pSpriteSheet = TheTextureManager::Instance()->getSpriteSheet("spritesheet");
+	TheSoundManager::Instance()->load("../Assets/audio/thunder.ogg",
+		"thunder", sound_type::SOUND_SFX);
 	// set frame width
 	setWidth(53);
 

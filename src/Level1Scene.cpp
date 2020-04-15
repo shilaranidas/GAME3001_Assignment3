@@ -26,6 +26,7 @@ void Level1Scene::draw()
 	
 	BulletManager::Instance()->draw();
 	ExplosionManager::Instance()->draw();
+	m_showEnemeyHealth();
 	// ImGui Rendering section - DO NOT MOVE OR DELETE
 	//if (m_displayUI)
 	//{
@@ -46,9 +47,20 @@ void Level1Scene::update()
 		m_pPlayer->attack = true;
 		
 	}
+	
 	//else
 		//m_pPlayer->attack = false;
+	BulletManager::Instance()->setGameObject(m_pPlaneSprite);
 	BulletManager::Instance()->update();
+	if (m_pPlaneSprite->getIsColliding()&& !m_update)
+	{
+		m_pPlaneSprite->m_health -= 20;
+		m_pPlayer->m_score++;
+		m_update = true;
+	}
+	m_showEnemeyHealth();
+	m_showPlayerHealth();
+	m_showPlayerScore();
 	ExplosionManager::Instance()->update();
 }
 
@@ -123,24 +135,28 @@ void Level1Scene::handleEvents()
 					bullet->dir = glm::vec2(10, 0);
 					bullet->setPosition(m_pPlayer->getPosition());					
 					TheSoundManager::Instance()->playSound("fire", 0);
+					m_update = false;
 				}
 				if (keyPressed == SDLK_LEFT) {
 					auto bullet = BulletManager::Instance()->getBullet();
 					bullet->dir = glm::vec2(-10, 0);
 					bullet->setPosition(m_pPlayer->getPosition());
 					TheSoundManager::Instance()->playSound("fire", 0);
+					m_update = false;
 				}
 				if (keyPressed == SDLK_UP) {
 					auto bullet = BulletManager::Instance()->getBullet();
 					bullet->dir = glm::vec2(0, -10);
 					bullet->setPosition(m_pPlayer->getPosition());
 					TheSoundManager::Instance()->playSound("fire", 0);
+					m_update = false;
 				}
 				if (keyPressed == SDLK_DOWN) {
 					auto bullet = BulletManager::Instance()->getBullet();
 					bullet->dir = glm::vec2(0, 10);
 					bullet->setPosition(m_pPlayer->getPosition());
 					TheSoundManager::Instance()->playSound("fire", 0);
+					m_update = false;
 				}
 			}
 			// movement keys
@@ -268,11 +284,57 @@ void Level1Scene::m_spawnPlayer()
 	//m_pPlayer->getTile()->setTileState(START);
 }
 
+void Level1Scene::m_showPlayerHealth()
+{
+	m_pPlayerHealthLabel->value = m_pPlayer->m_health;
+	m_pPlayerHealthLabel->setText("your health " + std::to_string(m_pPlayer->m_health) + "%");
+}
+
+void Level1Scene::m_showPlayerScore()
+{
+	m_pPlayerScoreLable->setText("Score:" + std::to_string(m_pPlayer->m_score));
+	m_pPlayerScoreLable->value = 0;
+}
+
+void Level1Scene::m_initiateLabel()
+{
+	const SDL_Color blue = { 0, 0, 255, 255 };
+	m_pPlayerHealthLabel = new Label("your health " + std::to_string(m_pPlayer->m_health) + "%", "Consolas", 15, blue, glm::vec2(100.0f, 15.0f));
+	m_pPlayerHealthLabel->value = m_pPlayer->m_health;
+	m_pPlayerHealthLabel->setBorder(true);
+	m_pPlayerHealthLabel->setBorderColor({ 0,0,0,255 });
+	m_pPlayerHealthLabel->setFillColor({ 222,184,135,255 });
+	m_pPlayerHealthLabel->setParent(this);
+	addChild(m_pPlayerHealthLabel);
+	const SDL_Color orange = { 255, 165, 0, 255 };
+	m_pPlayerScoreLable = new Label("Score:" + std::to_string(m_pPlayer->m_score), "Consolas", 15, orange, glm::vec2(400.0f, 15.0f));
+	m_pPlayerScoreLable->value = 0;
+	m_pPlayerScoreLable->setBorder(true);
+	m_pPlayerScoreLable->setBorderColor({ 0,0,0,255 });
+	m_pPlayerScoreLable->setFillColor({ 255,255,255,255 });
+	m_pPlayerScoreLable->setParent(this);
+	addChild(m_pPlayerScoreLable);
+	const SDL_Color co = { 0, 0, 0, 255 };
+	m_pEnemyHealthLabel = new Label("Health " + std::to_string(m_pPlaneSprite->m_health) + "%", "Consolas", 15, co, glm::vec2(700.0f, 15.0f));
+	m_pEnemyHealthLabel->value = m_pPlaneSprite->m_health;
+	m_pEnemyHealthLabel->setBorder(true);
+	m_pEnemyHealthLabel->setBorderColor({ 255,0,0,255 });
+	m_pEnemyHealthLabel->setFillColor({ 255,255,154,255 });
+	m_pEnemyHealthLabel->setParent(this);
+	addChild(m_pEnemyHealthLabel);
+}
+
 void Level1Scene::m_spawnPlane()
 {
 	m_spawnObject(m_pPlaneSprite);
 	m_computeTileValues();
 	//m_pPlaneSprite->getTile()->setTileState(GOAL);
+}
+void Level1Scene::m_showEnemeyHealth()
+{
+	m_pEnemyHealthLabel->setText("Health " + std::to_string(m_pPlaneSprite->m_health) + "%");
+	m_pEnemyHealthLabel->value = m_pPlaneSprite->m_health;
+
 }
 void Level1Scene::m_computeTileValues()
 {
@@ -368,12 +430,11 @@ void Level1Scene::start()
 	m_pPlayer = new Player();
 	addChild(m_pPlayer);
 	m_spawnPlayer();
-	const SDL_Color blue = { 0, 0, 255, 255 };
-	m_pPlayer->health = 80;
-	m_pPlayerHealthLabel = new Label("Remaining "+std::to_string(m_pPlayer->health)+"%", "Consolas", 15, blue, glm::vec2(100.0f, 15.0f));
-	m_pPlayerHealthLabel->value = 80;
-	m_pPlayerHealthLabel->setBorder(true);
-	m_pPlayerHealthLabel->setParent(this);
-	addChild(m_pPlayerHealthLabel);
+	m_initiateLabel();
+	m_showEnemeyHealth();
+	m_showPlayerHealth();
+	m_showPlayerScore();
+
+	
 	
 }

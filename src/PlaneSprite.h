@@ -20,7 +20,7 @@ public:
 
 	
 	void setAnimation(const Animation& animation);
-
+	int m_health;
 private:
 	void m_buildAnimations();
 

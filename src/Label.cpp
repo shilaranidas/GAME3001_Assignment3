@@ -24,11 +24,11 @@ void Label::draw()
 {
 	const int xComponent = getPosition().x;
 	const int yComponent = getPosition().y;
-	if (!m_isBordered)
+	if (!m_isBordered && !m_isFilled)
 	TheTextureManager::Instance()->drawText(m_fontID, xComponent, yComponent,
 		TheGame::Instance()->getRenderer(), 0, 255, m_isCentered);
 	else 
-		TheTextureManager::Instance()->drawTextBorder(value,m_fontID, xComponent, yComponent,
+		TheTextureManager::Instance()->drawTextBorder(value,m_borderColour,m_fillColour,m_fontID, xComponent, yComponent,
 			TheGame::Instance()->getRenderer(), 0, 255, m_isCentered);
 }
 
@@ -79,6 +79,14 @@ void Label::setSize(const int new_size)
 void Label::setBorder(bool b)
 {
 	m_isBordered = b;
+}
+void Label::setBorderColor(SDL_Color c)
+{
+	m_borderColour =c;
+}
+void Label::setFillColor(SDL_Color c)
+{
+	m_fillColour = c;
 }
 
 void Label::m_buildFontID()

@@ -4,7 +4,7 @@
 #include <utility>
 
 
-PlaneSprite::PlaneSprite()
+PlaneSprite::PlaneSprite(): m_health(100)
 {
 	TheTextureManager::Instance()->loadSpriteSheet(
 		"../Assets/sprites/atlas.txt",

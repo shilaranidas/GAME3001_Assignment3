@@ -38,10 +38,14 @@ void Bullet::draw()
 			getPosition().x, getPosition().y, m_currentFrame, 0.5f,
 			TheGame::Instance()->getRenderer(), 0, 255, true);
 }
-
+void Bullet::setGameObject(GameObject* go)
+{
+	m_pGameObj = go;
+}
 void Bullet::update()
 {
 	this->setPosition(this->getPosition() + dir);
+	CollisionManager::AABBCheck(this, m_pGameObj);
 }
 
 void Bullet::clean()
