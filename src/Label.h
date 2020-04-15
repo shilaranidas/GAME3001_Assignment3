@@ -21,7 +21,8 @@ public:
 	void setText(const std::string& new_text);
 	void setColour(SDL_Color new_colour) const;
 	void setSize(int new_size);
-
+	void setBorder(bool b);
+	int value;
 private:
 	std::string m_fontPath;
 	std::string m_fontID;
@@ -29,6 +30,7 @@ private:
 	std::string m_fontName;
 	std::string m_text;
 	bool m_isCentered = true;
+	bool m_isBordered = false;
 	int m_fontSize;
 	int m_fontStyle;
 

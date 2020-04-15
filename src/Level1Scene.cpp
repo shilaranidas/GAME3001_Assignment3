@@ -3,7 +3,8 @@
 #include "ExplosionManager.h"
 #include "Wall.h"
 #include "Util.h"
-
+#include "IMGUI_SDL/imgui_sdl.h"
+#include <string>
 
 Level1Scene::Level1Scene()
 {
@@ -20,12 +21,23 @@ void Level1Scene::draw()
 	m_pWall1->draw();
 	if(m_pPlayer->attack)
 		m_pPlayer->drawKnife();
+	
+	
+
 	ExplosionManager::Instance()->draw();
+	// ImGui Rendering section - DO NOT MOVE OR DELETE
+	//if (m_displayUI)
+	//{
+		/*ImGui::Render();
+		ImGuiSDL::Render(ImGui::GetDrawData());
+		SDL_SetRenderDrawColor(TheGame::Instance()->getRenderer(), 255, 255, 255, 255);*/
+	//}
 }
 
 void Level1Scene::update()
 {
 	updateDisplayList();
+	
 	if (!m_pPlayer->attack && CollisionManager::squaredDistance(m_pPlayer->getPosition(), m_pPlaneSprite->getPosition()) < (m_pPlayer->getHeight() + m_pPlaneSprite->getHeight()) * 0.5f + 20)
 	{
 		std::cout << "attack" << std::endl;
@@ -319,6 +331,12 @@ void Level1Scene::start()
 	m_pPlayer = new Player();
 	addChild(m_pPlayer);
 	m_spawnPlayer();
-
+	const SDL_Color blue = { 0, 0, 255, 255 };
+	m_pPlayer->health = 80;
+	m_pPlayerHealthLabel = new Label("Remaining "+std::to_string(m_pPlayer->health)+"%", "Consolas", 15, blue, glm::vec2(100.0f, 15.0f));
+	m_pPlayerHealthLabel->value = 80;
+	m_pPlayerHealthLabel->setBorder(true);
+	m_pPlayerHealthLabel->setParent(this);
+	addChild(m_pPlayerHealthLabel);
 	
 }

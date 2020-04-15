@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "Game.h"
 
-Player::Player(): m_currentAnimationState(PLAYER_IDLE_RIGHT), attack(false)
+Player::Player(): m_currentAnimationState(PLAYER_IDLE_RIGHT), attack(false), health(100)
 {
 	TheTextureManager::Instance()->loadSpriteSheet(
 		"../Assets/sprites/atlas.txt",

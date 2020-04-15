@@ -26,7 +26,10 @@ public:
 	void m_buildGrid();
 	void m_resetGrid();
 	void m_mapTiles();
+	
 private:
+	Label* m_pPlayerHealthLabel{};
+	Label* m_pEnemyHealthLabel{};
 	std::vector<Tile*> m_openList;
 	std::vector<Tile*> m_closedList;
 	glm::vec2 m_mousePosition;

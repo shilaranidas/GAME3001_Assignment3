@@ -410,7 +410,6 @@ void PlayScene::m_updateUI()
 	std::string windowString = "Settings ";
 
 	ImGui::Begin(&windowString[0], NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_MenuBar);
-
 	// set window to top getLeft corner
 	ImGui::SetWindowPos(ImVec2(0, 0), true);
 

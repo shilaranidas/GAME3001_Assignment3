@@ -27,7 +27,7 @@ public:
 	void setAnimationState(PlayerAnimationState new_state);
 	void setAnimation(const Animation& animation);
 	bool attack;
-
+	int health;
 private:
 	void m_buildAnimations();
 

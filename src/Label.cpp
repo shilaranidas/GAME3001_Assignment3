@@ -1,6 +1,6 @@
 #include "Label.h"
 #include "Game.h"
-
+#include "Util.h"
 
 Label::Label(const std::string& text, const std::string& font_name, const int font_size, const SDL_Color colour, const glm::vec2 position, const int font_style, const bool is_centered):
 	m_fontColour(colour), m_fontName(font_name), m_text(text), m_isCentered(is_centered), m_fontSize(font_size), m_fontStyle(font_style)
@@ -24,8 +24,12 @@ void Label::draw()
 {
 	const int xComponent = getPosition().x;
 	const int yComponent = getPosition().y;
+	if (!m_isBordered)
 	TheTextureManager::Instance()->drawText(m_fontID, xComponent, yComponent,
 		TheGame::Instance()->getRenderer(), 0, 255, m_isCentered);
+	else 
+		TheTextureManager::Instance()->drawTextBorder(value,m_fontID, xComponent, yComponent,
+			TheGame::Instance()->getRenderer(), 0, 255, m_isCentered);
 }
 
 void Label::update()
@@ -70,6 +74,11 @@ void Label::setSize(const int new_size)
 	setWidth(size.x);
 	setHeight(size.y);
 	setPosition(getPosition());
+}
+
+void Label::setBorder(bool b)
+{
+	m_isBordered = b;
 }
 
 void Label::m_buildFontID()
