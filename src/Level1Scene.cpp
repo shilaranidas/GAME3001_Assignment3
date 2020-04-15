@@ -124,16 +124,20 @@ void Level1Scene::handleEvents()
 						m_pPlayer->moveUp();
 						m_pPlayer->setTile(m_pPlayer->getTile()->getUp());
 					}
+					else if(m_pPlayer->getTile()->getUp()->getTileState() == IMPASSABLE)
+						TheSoundManager::Instance()->playSound("yay", 0);
 				}
 
 				if (keyPressed == SDLK_a)
 				{
-					if (m_pPlayer->getTile()->getLeft()->getTileState() != IMPASSABLE && m_pPlayer->getTile()->getUp()->getTileState() != OBSTACLE)
+					if (m_pPlayer->getTile()->getLeft()->getTileState() != IMPASSABLE && m_pPlayer->getTile()->getLeft()->getTileState() != OBSTACLE)
 					{
 						m_pPlayer->setAnimationState(PLAYER_RUN_LEFT);
 						m_pPlayer->moveLeft();
 						m_pPlayer->setTile(m_pPlayer->getTile()->getLeft());
 					}
+					else if (m_pPlayer->getTile()->getLeft()->getTileState() == IMPASSABLE)
+						TheSoundManager::Instance()->playSound("yay", 0);
 					//std::cout << "move left" << std::endl;
 					
 				}
@@ -141,21 +145,25 @@ void Level1Scene::handleEvents()
 				if (keyPressed == SDLK_s)
 				{
 					std::cout << "move back" << std::endl;
-					if (m_pPlayer->getTile()->getDown()->getTileState() != IMPASSABLE && m_pPlayer->getTile()->getUp()->getTileState() != OBSTACLE)
+					if (m_pPlayer->getTile()->getDown()->getTileState() != IMPASSABLE && m_pPlayer->getTile()->getDown()->getTileState() != OBSTACLE)
 					{
 						m_pPlayer->moveDown();
 						m_pPlayer->setTile(m_pPlayer->getTile()->getDown());
 					}
+					else if (m_pPlayer->getTile()->getDown()->getTileState() == IMPASSABLE)
+						TheSoundManager::Instance()->playSound("yay", 0);
 				}
 
 				if (keyPressed == SDLK_d)
 				{
-					if (m_pPlayer->getTile()->getRight()->getTileState() != IMPASSABLE && m_pPlayer->getTile()->getUp()->getTileState() != OBSTACLE)
+					if (m_pPlayer->getTile()->getRight()->getTileState() != IMPASSABLE && m_pPlayer->getTile()->getRight()->getTileState() != OBSTACLE)
 					{
 						m_pPlayer->setAnimationState(PLAYER_RUN_RIGHT);
 						m_pPlayer->moveRight();
 						m_pPlayer->setTile(m_pPlayer->getTile()->getRight());
 					}
+					else if (m_pPlayer->getTile()->getRight()->getTileState() == IMPASSABLE)
+						TheSoundManager::Instance()->playSound("yay", 0);
 					//std::cout << "move right" << std::endl;
 					
 				}
