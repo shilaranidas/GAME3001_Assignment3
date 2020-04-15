@@ -22,9 +22,11 @@ public:
 	void moveDown();
 	void moveLeft();
 	void moveRight();
+	void drawKnife();
 	// setters
 	void setAnimationState(PlayerAnimationState new_state);
 	void setAnimation(const Animation& animation);
+	bool attack;
 
 private:
 	void m_buildAnimations();

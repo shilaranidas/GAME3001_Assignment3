@@ -22,3 +22,4 @@ plane3 65 419 62 51
 restartButton 1 472 150 50
 startButton 1 524 150 50
 wall 197 363 40 200
+knife 2 20 33 30

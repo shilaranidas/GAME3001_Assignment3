@@ -18,12 +18,24 @@ void Level1Scene::draw()
 	drawDisplayList();
 	m_pWall->draw();
 	m_pWall1->draw();
+	if(m_pPlayer->attack)
+		m_pPlayer->drawKnife();
 	ExplosionManager::Instance()->draw();
 }
 
 void Level1Scene::update()
 {
 	updateDisplayList();
+	if (!m_pPlayer->attack && CollisionManager::squaredDistance(m_pPlayer->getPosition(), m_pPlaneSprite->getPosition()) < (m_pPlayer->getHeight() + m_pPlaneSprite->getHeight()) * 0.5f + 20)
+	{
+		std::cout << "attack" << std::endl;
+		TheSoundManager::Instance()->playSound("yay", 0);
+		m_pPlayer->attack = true;
+		
+	}
+	//else
+		//m_pPlayer->attack = false;
+
 	ExplosionManager::Instance()->update();
 }
 

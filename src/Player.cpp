@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "Game.h"
 
-Player::Player(): m_currentAnimationState(PLAYER_IDLE_RIGHT)
+Player::Player(): m_currentAnimationState(PLAYER_IDLE_RIGHT), attack(false)
 {
 	TheTextureManager::Instance()->loadSpriteSheet(
 		"../Assets/sprites/atlas.txt",
@@ -9,7 +9,8 @@ Player::Player(): m_currentAnimationState(PLAYER_IDLE_RIGHT)
 		"spritesheet", TheGame::Instance()->getRenderer());
 
 	m_pSpriteSheet = TheTextureManager::Instance()->getSpriteSheet("spritesheet");
-	
+	TheSoundManager::Instance()->load("../Assets/audio/knifesharpener1.flac",
+		"yay", sound_type::SOUND_SFX);
 	// set frame width
 	setWidth(53);
 
@@ -49,11 +50,17 @@ void Player::draw()
 		TheTextureManager::Instance()->playAnimation("spritesheet", m_pAnimations["run"],
 			getPosition().x, getPosition().y, m_pAnimations["run"].current_frame, 0.25f,
 			TheGame::Instance()->getRenderer(), 0, 255, true);
+		if(attack)
+			TheTextureManager::Instance()->draw("knife", this->getPosition().x+20, this->getPosition().y,
+				TheGame::Instance()->getRenderer(), 0, 255, true,SDL_FLIP_HORIZONTAL);
 		break;
 	case PLAYER_RUN_LEFT:
 		TheTextureManager::Instance()->playAnimation("spritesheet", m_pAnimations["run"],
 			getPosition().x, getPosition().y, m_pAnimations["run"].current_frame, 0.25f,
 			TheGame::Instance()->getRenderer(), 0, 255, true, SDL_FLIP_HORIZONTAL);
+		if (attack)
+			TheTextureManager::Instance()->draw("knife", this->getPosition().x - 20, this->getPosition().y,
+				TheGame::Instance()->getRenderer(), 0, 255, true);
 		break;
 	}
 	
@@ -63,6 +70,7 @@ void Player::draw()
 
 void Player::update()
 {
+	
 }
 
 void Player::clean()
@@ -101,6 +109,33 @@ void Player::moveRight()
 	const glm::vec2 newPosition = getPosition() + glm::vec2(40, 0);
 
 	setPosition(newPosition);
+}
+void Player::drawKnife()
+{
+	const int xComponent = getPosition().x;
+	const int yComponent = getPosition().y;
+
+	switch (m_currentAnimationState)
+	{
+	case PLAYER_IDLE_RIGHT:
+		
+		break;
+	case PLAYER_IDLE_LEFT:
+		
+		break;
+	case PLAYER_RUN_RIGHT:
+		
+		if (attack)
+			TheTextureManager::Instance()->draw("knife", xComponent + 20, yComponent,
+				TheGame::Instance()->getRenderer(), 0, 255, true, SDL_FLIP_HORIZONTAL);
+		break;
+	case PLAYER_RUN_LEFT:
+		
+		if (attack)
+			TheTextureManager::Instance()->draw("knife", xComponent - 20, yComponent,
+				TheGame::Instance()->getRenderer(), 0, 255, true);
+		break;
+	}
 }
 void Player::m_buildAnimations()
 {
